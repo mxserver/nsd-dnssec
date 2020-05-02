@@ -1,6 +1,8 @@
-# hardware/nsd-dnssec
+# mxserver/nsd-dnssec
 
 ![nsd](https://i.imgur.com/tPgkQVB.png "nsd")
+
+Bases on harware/nsd-dnssec
 
 ### What is this?
 
@@ -10,7 +12,7 @@ NSD is an authoritative only, high performance, simple and open source name serv
 
 - Lightweight & secure image (no root process)
 - Based on Alpine Linux
-- Latest NSD version (4.2.1 - Jul 9, 2019)
+- Latest NSD version (4.3.1 - Apr 8, 2020)
 - ZSK and KSK keys, DS-Records management and zone signature with ldns
 
 ### Build-time variables
@@ -137,8 +139,8 @@ Check your zone and nsd configuration:
 
 ```
 cd /mnt/docker/nsd
-docker run --rm -v `pwd`/zones:/zones -ti hardware/nsd-dnssec nsd-checkzone domain.tld /zones/db.domain.tld
-docker run --rm -v `pwd`/conf:/etc/nsd -ti hardware/nsd-dnssec nsd-checkconf /etc/nsd/nsd.conf
+docker run --rm -v `pwd`/zones:/zones -ti mxserver/nsd-dnssec nsd-checkzone domain.tld /zones/db.domain.tld
+docker run --rm -v `pwd`/conf:/etc/nsd -ti mxserver/nsd-dnssec nsd-checkconf /etc/nsd/nsd.conf
 ```
 
 ### Docker-compose
