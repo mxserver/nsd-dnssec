@@ -2,7 +2,7 @@
 
 ![nsd](https://i.imgur.com/tPgkQVB.png "nsd")
 
-Bases on harware/nsd-dnssec
+Based on harware/nsd-dnssec
 
 ### What is this?
 
