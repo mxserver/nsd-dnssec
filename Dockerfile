@@ -1,15 +1,15 @@
-FROM alpine:3.12
+FROM alpine:3.15
 
 LABEL description "Simple DNS authoritative server with DNSSEC support" \
       maintainer="MXServer <admin@msync.work>"
 
-ARG NSD_VERSION=4.3.5
+ARG NSD_VERSION=4.3.9
 
 # https://pgp.mit.edu/pks/lookup?search=0x7E045F8D&fingerprint=on&op=index
 # pub  4096R/7E045F8D 2011-04-21 W.C.A. Wijngaards <wouter@nlnetlabs.nl>
 ARG GPG_SHORTID="0x7E045F8D"
 ARG GPG_FINGERPRINT="EDFA A3F2 CA4E 6EB0 5681  AF8E 9F6F 1C2D 7E04 5F8D"
-ARG SHA256_HASH="7da2b43e30b3d7f307722c608f719bfb169f0d985c764a34fa0669dc33484472"
+ARG SHA256_HASH="531549f09289ecbd05829e14bb34563294d85b9edde2c613a00f597af2135e8d"
 
 ENV UID=991 GID=991
 
@@ -32,7 +32,7 @@ RUN apk add --no-cache --virtual build-dependencies \
  && CHECKSUM=$(sha256sum nsd-${NSD_VERSION}.tar.gz | awk '{print $1}') \
  && if [ "${CHECKSUM}" != "${SHA256_HASH}" ]; then echo "ERROR: Checksum does not match!" && exit 1; fi \
  && ( \
-    gpg --keyserver ha.pool.sks-keyservers.net --recv-keys ${GPG_SHORTID} || \
+    gpg --keyserver keyserver.ubuntu.com --recv-keys ${GPG_SHORTID} || \
     gpg --keyserver keyserver.pgp.com --recv-keys ${GPG_SHORTID} || \
     gpg --keyserver pgp.mit.edu --recv-keys ${GPG_SHORTID} \
     ) \
