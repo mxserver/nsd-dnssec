@@ -25,15 +25,6 @@ jobs:
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
-    - name: Build the Docker image
-      run: |
-          sudo apt update
-          sudo apt install -y qemu-user-static
-          test -e /proc/sys/fs/binfmt_misc/qemu-arm || sudo update-binfmts --enable qemu-arm
-          test -e /proc/sys/fs/binfmt_misc/qemu-aarch64 || sudo update-binfmts --enable qemu-aarch64
-          docker buildx create --use
-          docker buildx build --platform linux/amd64,linux/arm,linux/arm64  -t mxserver/nsd-dnssec --push .
-
     - name: Build and push
       id: docker_build
       uses: docker/build-push-action@v3
@@ -42,4 +33,4 @@ jobs:
           file: ./Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ${{ env.REGISTRY }}/${{ github.repository }}:latest
+          tags: ${{ github.repository }}:latest
