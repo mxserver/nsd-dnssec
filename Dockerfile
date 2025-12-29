@@ -32,10 +32,10 @@ RUN apk add --no-cache --virtual build-dependencies \
  && CHECKSUM=$(sha256sum nsd-${NSD_VERSION}.tar.gz | awk '{print $1}') \
  && if [ "${CHECKSUM}" != "${SHA256_HASH}" ]; then echo "ERROR: Checksum does not match!" && exit 1; fi \
  && ( \
+    (wget -qO - https://keys.openpgp.org/vks/v1/by-fingerprint/${GPG_SHORTID} | gpg --import ) || \
     gpg --keyserver keyserver.ubuntu.com --recv-keys ${GPG_SHORTID} || \
     gpg --keyserver keyserver.pgp.com --recv-keys ${GPG_SHORTID} || \
-    gpg --keyserver pgp.mit.edu --recv-keys ${GPG_SHORTID} || \
-    wget -qO - https://keys.openpgp.org/vks/v1/by-fingerprint/${GPG_SHORTID} | gpg --import \
+    gpg --keyserver pgp.mit.edu --recv-keys ${GPG_SHORTID} \
     ) \
  && FINGERPRINT="$(LANG=C gpg --verify nsd-${NSD_VERSION}.tar.gz.asc nsd-${NSD_VERSION}.tar.gz 2>&1 \
   | sed -n "s#Primary key fingerprint: \(.*\)#\1#p")" \
